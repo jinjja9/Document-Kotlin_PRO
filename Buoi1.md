@@ -1,4 +1,4 @@
-#  [KOTLIN] BUỔI 1: Syntax in Kotlin
+#  [KOTLIN] BUỔI 1: MỞ ĐẦU
 
 ***
 ## 1. Biến, kiểu dữ liệu
