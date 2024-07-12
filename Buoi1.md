@@ -1,7 +1,8 @@
-#  [KOTLIN] BUỔI 1: MỞ ĐẦU
+#  [KOTLIN] BUỔI 1: Syntax in Kotlin
 
 ***
 ## 1. Biến, kiểu dữ liệu
+- Khai báo tường minh nahnh hơn khai báo không tường minh
 ### 1.1: Khai báo biến
 
 * **val**: Dùng để khai báo biến không thay đổi giá trị (immutable).
@@ -265,9 +266,9 @@ fun main() {
 - Mục đích: Lọc ra các phần tử thỏa mãn một điều kiện nhất định.
 - Hoạt động: Hàm filter nhận một lambda expression trả về giá trị Boolean. Nó sẽ kiểm tra từng phần tử trong collection và chỉ giữ lại những phần tử mà lambda expression trả về true
 
-**filter**
+**map**
 - Mục đích: Biến đổi (transform) các phần tử của collection thành một dạng khác.
-- Hoạt động: Hàm map nhận một lambda expression mô tả cách biến đổi từng phần tử. Nó sẽ áp dụng lambda expression lên từng phần tử và trả về một collection mới chứa các phần tử đã được biến đổi
+- Hoạt động: Hàm map nhận một lambda expression mô tả cách biến đổi từng phần tử. Nó sẽ áp dụng lambda expression lên từng phần tử và trả về một collection mới chứa các phần tử đã được biến đổi.
 ```
 fun main() {
     val list = listOf(1,2,3,4,5)
