@@ -428,6 +428,8 @@ fun main()
 ## II. Special Class
 ### 1: Data class
 
+// Không sử dụng var, mà nên sử dụng val ở khai báo 
+
 Trong Kotlin, **data class** là một cú pháp đặc biệt để định nghĩa một lớp dùng để lưu trữ dữ liệu (data holder). Kotlin sẽ tự động tạo các thành viên của lớp như các trường (properties), phương thức **equals()**, **hashCode()**, **toString()**, **copy()** và các hàm tạo (constructor) từ các thuộc tính được khai báo trong primary constructor của **data class**.
 
 **Cú pháp của Data Class**
@@ -619,7 +621,7 @@ fun main() {
 }
 ```
 
-### 3:Sealed class
+### 3: Sealed class
 Trong Kotlin, **sealed class** là một loại lớp đặc biệt cho phép bạn giới hạn một tập hợp các lớp con có thể kế thừa từ nó. Điều này giúp bạn kiểm soát tốt hơn về hệ thống phân cấp lớp (class hierarchy) và thường được sử dụng khi bạn có một tập hợp các giá trị hoặc trường hợp (cases) mà bạn biết trước và không muốn mở rộng thêm ngoài các lớp con đã xác định.
 
 **Cú pháp và cách sử dụng**
