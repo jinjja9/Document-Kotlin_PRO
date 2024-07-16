@@ -4,7 +4,7 @@
 ## I. 4 tính chất OOP
 Trong lập trình hướng đối tượng (OOP) bằng Kotlin, bốn tính chất quan trọng là 
 
-![alt text](image.png)
+![alt text](image/image.png)
 
 - **Đóng gói (Encapsulation)**
 - **Kế thừa (Inheritance)**
