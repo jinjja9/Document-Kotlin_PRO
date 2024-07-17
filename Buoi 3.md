@@ -413,9 +413,9 @@ Trong Kotlin, **Abstraction (trừu tượng hóa)** là khả năng ẩn đi ch
 
 **Interface và Abstract Class:** Kotlin cung cấp cả interface và abstract class để định nghĩa các phương thức trừu tượng.
 
-**Interface trong Kotlin** là một khuôn mẫu chứa các phương thức abstract và mặc định, mà các lớp có thể triển khai.
+**Interface trong Kotlin** là một khuôn mẫu chứa các phương thức abstract và mặc định, mà các lớp có thể triển khai. Để lưu trạng thái, không quan tâm có hoạt động như thế nào
 
-**Abstract Class trong Kotlin** là một lớp mà không thể khởi tạo và có thể có các phương thức abstract và thực thể, được kế thừa và override bởi các lớp con.
+**Abstract Class trong Kotlin** là một lớp mà không thể khởi tạo và có thể có các phương thức abstract và thực thể, được kế thừa và override bởi các lớp con. Để lưu lại hoạt động
 
 #### 4.1: Interface trong Kotlin
 
