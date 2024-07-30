@@ -388,3 +388,6 @@ Một tài liệu XML điển hình bao gồm các phần tử được bao bọ
     ```
 
 Các view cơ bản này là nền tảng để xây dựng giao diện người dùng trong ứng dụng Android. Sử dụng hợp lý các view này sẽ giúp bạn tạo ra các ứng dụng có giao diện trực quan và thân thiện với người dùng.
+
+
+
