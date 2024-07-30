@@ -296,7 +296,7 @@ Khi hai cạnh đối diện nhau của View có ràng buộc, thì hai dàng bu
 -   app:layout_constraintVertical_bias thiết lập độ mềm của ràng buộc đầu (ngang). Với tổng độ mềm là 1 thì khi app:layout_constraintVertical_bias="0.1" thì độ mềm ràng buộc thứ hai sẽ là 0.9
 -   layout_constraintHorizontal_bias để thiết lập độ mềm hai ràng buộc theo phương đứng
 
-## 6.Tỷ lệ các cạnh của View
+### 6.Tỷ lệ các cạnh của View
 
 Khi View con có thiết lập tối thiểu một kích thước là "0dp" thì kích thước đó có thể tự động điều chỉnh bằng cách lấy theo tỷ lệ với cạnh còn lại, thuộc tính app:layout_constraintDimensionRatio cho phép gán tỷ lệ giữa chiều rộng và chiều cao, ví dụ: app:layout_constraintDimensionRatio="2:1" chiều rộng gấp đôi chiều cao
 
@@ -368,4 +368,87 @@ Khi View con có thiết lập tối thiểu một kích thước là "0dp" thì
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+## IV. View Binding 
+
+### 1. ViewBinding
+
+`View binding` là một tính năng giúp cho việc tương tác với các View trở nên dễ dàng hơn. Khi `view binding` được kích hoạt trong một module, nó sẽ tạo ra một lớp binding cho mỗi tệp layout XML có trong module đó. Một instance của một binding class chứa các tham chiếu trực tiếp đến tất cả các view có ID trong layout tương ứng.
+
+### 2. Cài đặt 
+
+Để kích hoạt `view binding` trong một module, cần thiết lập tùy chọn viewBinding trong tệp **build.gradle** cấp module:
+
+```kotlin
+android {
+    ...
+    buildFeatures {
+        viewBinding = true
+    }
+}
+```
+
+Giả sử bạn có một tệp layout XML có tên là activity_main.xml. Sau khi kích hoạt View Binding, Android Studio sẽ tạo ra một lớp binding tương ứng với tệp layout này (trong trường hợp này, là ActivityMainBinding).
+
+Sau khi đã kích hoạt `View Binding`, Android Studio sẽ tự động tạo ra các binding classes cho các tệp layout XML. Nếu không muốn tự động tạo binding class trong một file layout nào đó thì thêm thuộc tính tools:viewBindingIgnore="true" vào view gốc của file layout đó.
+
+```kotlin
+<LinearLayout
+        ...
+        tools:viewBindingIgnore="true" >
+    ...
+</LinearLayout>
+```
+
+### 3. Cách sử dụng
+
+- Nếu view binding được kích hoạt, 1 binding class sẽ được tạo ra cho mỗi file layout XML
+- Mỗi `binding class` chứa tham chiếu tới `root view` và `tất cả các views có ID` . Tên của `binding class` được tạo ra bằng cách chuyển tên của file XML sang Pascal case và thêm từ Binding vào cuối.
+- VD ta có 1 layout file `result_profule.xml`
+    
+    ```xml
+    <LinearLayout ... >
+        <TextView android:id="@+id/name" />
+        <ImageView android:cropToPadding="true" />
+        <Button android:id="@+id/button"
+            android:background="@drawable/rounded_button" />
+    </LinearLayout>
+    ```
+    
+- Binding class được tạo ra sẽ có tên **`ResultProfileBinding`** . Class này sẽ có 2 fields: một `TextView` là `name` và một `Button` gọi là `button`. `ImageView` không có ID nên trong `binding class` không có tham chiếu tới nó.
+- Tất cả các binding class đều có phương thức `getRoot()`, tham chiếu trực tiếp đến `root view` của layout file tương ứng. Trong ví dụ trên, phương thức `getRoot()` trong class `ResultProfileBinding` trả về`LinearLayout` root view.
+
+## V. Sử dụng thư viện Glide để load ảnh 
+
+**Thêm Glide vào build.gradle**
+
+Trước tiên, bạn cần thêm phụ thuộc Glide vào file build.gradle của module ứng dụng:
+
+```
+dependencies {
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    kapt 'com.github.bumptech.glide:compiler:4.15.1'
+}
+```
+
+**Sử dụng Glide để tải ảnh**
+
+Giả sử bạn có một `ImageView` trong layout của bạn và muốn tải một ảnh từ URL vào `ImageView`, bạn có thể làm như sau:
+
+```
+import com.bumptech.glide.Glide
+
+// Tải ảnh từ URL vào ImageView
+Glide.with(context)
+    .load("https://example.com/image.jpg") // URL của ảnh
+    .into(imageView) // imageView là ImageView của bạn
+```
+
+Nếu bạn muốn tải ảnh từ drawable resource, bạn có thể sử dụng:
+
+```
+Glide.with(context)
+    .load(R.drawable.your_image) // Drawable resource ID
+    .into(imageView)
 ```
