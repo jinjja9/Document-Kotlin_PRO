@@ -1,4 +1,4 @@
-#  [ANDROID] BUỔI 6: Basic Layout
+#  [ANDROID] BUỔI 7: Basic Layout
 
 ***
 
@@ -451,4 +451,8 @@ Nếu bạn muốn tải ảnh từ drawable resource, bạn có thể sử dụ
 Glide.with(context)
     .load(R.drawable.your_image) // Drawable resource ID
     .into(imageView)
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 5f42c51bb8f7998ad3d866dc1a26e346fcf92357
