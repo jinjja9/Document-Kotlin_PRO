@@ -458,6 +458,9 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ## VII. Multi-resume, onTopResumedActivityChanged()
 
+
+### 1. Multi-resume
+
 `Multi-resume` là một tính năng được giới thiệu từ Android 10 (API level 29), cho phép nhiều hoạt động (activities) có thể ở trạng thái resumed cùng một lúc. 
 
 Trước đó, chỉ một activity có thể ở trạng thái `resumed`, còn các activity khác chỉ có thể ở trạng thái `paused`. 
@@ -476,7 +479,7 @@ Trước đó, chỉ một activity có thể ở trạng thái `resumed`, còn 
     - Acitvity mất focus, nhưng không bị che khuất và người dùng có thể tương tác với hoạt động đó. Ví dụ: ở chế độ nhiều cửa sổ, một số hoạt động có thể hiển thị và nhận đầu vào cảm ứng cùng lúc.
 - Với sự xuất hiện của tính năng `multi-resume`trong Android Q, nhiều `Activity` có thể ở trạng thái `Resumed`, cho phép chúng hoạt động và tương tác đầy đủ với người dùng.
 
-**onTopResumedActivityChanged**
+### 2.onTopResumedActivityChanged
 
 Phương thức `onTopResumedActivityChanged(boolean isTopResumed)` là một phần của lớp `Activity`. Phương thức này được gọi khi activity của bạn thay đổi trạng thái từ hoạt động trên cùng (top-resumed) hoặc không phải hoạt động trên cùng.
 
