@@ -118,6 +118,34 @@ Mỗi Activity khai báo trong manifest đều nằm trong phần tử applicati
 <!-- .... --!>
 ```
 
+### 2. Cấu hình Activity trong AndroidManifest.xml
+
+-   Để một Activity có thể mở ra được (chạy được) bằng phương thức Context.startActivity(); hoặc khởi chạy khi mở ứng dụng thì phải khai báo nó trong AndroidManifest.xml.
+-   Mỗi Activity khai báo trong manifest đều nằm trong phần tử application với cú pháp:
+
+```
+<!-- .... --!>
+    <activity android:name="lớp_Activity">
+        <!-- các tham số con --!>
+    </activity>
+<!-- .... --!>
+```
+
+Ngoài thuộc tính `android:name` như trên, tùy thuộc mục đích còn có nhiều thuộc tính khác kế thừa từ Theme, hoặc được thiết lập trực tiếp như: `android:screenOrientation`, `android:label`, `android:icon`, `android:permission` ... 
+
+Để thiết lập Activity là Activity mặc định (chạy đầu tiên khi mở ứng dụng thì thêm `intent-filter` như sau vào trong phần tử activity đó, ví dụ:
+
+```
+<!-- .... --!>
+    <activity android:name="lớp_Activity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+<!-- .... --!>
+```
+
 ## V.Intent
 
 ### 1. Intent là gì
@@ -427,6 +455,7 @@ protected void onCreate(Bundle savedInstanceState) {
     }
 }
 ```
+
 ## VII. Multi-resume, onTopResumedActivityChanged()
 
 `Multi-resume` là một tính năng được giới thiệu từ Android 10 (API level 29), cho phép nhiều hoạt động (activities) có thể ở trạng thái resumed cùng một lúc. 
@@ -434,6 +463,18 @@ protected void onCreate(Bundle savedInstanceState) {
 Trước đó, chỉ một activity có thể ở trạng thái `resumed`, còn các activity khác chỉ có thể ở trạng thái `paused`. 
 
 `Multi-resume` hữu ích khi bạn có các ứng dụng hoặc cửa sổ nhiều nhiệm, ví dụ như trên các thiết bị màn hình gập hoặc chế độ đa cửa sổ.
+
+-   Cả hai hoạt động ở chế độ chia đôi màn hình đều được tiếp tục.
+-   Tất cả các hoạt động hiển thị trên cùng ở chế độ cửa sổ dạng tự do sẽ được tiếp tục.
+-   Các hoạt động trên nhiều màn hình có thể được tiếp tục cùng một lúc.
+
+![alt text](image/image26.png)
+
+
+- Trong Android 9 (và các phiên bản thấp hơn), các ứng dụng được đưa vào trạng thái `PAUSED` khi:
+    - Một activity mới được khởi chạy ở đầu ứng dụng, trong khi ứng dụng vẫn hiển thị (và do đó, không bị stopped).
+    - Acitvity mất focus, nhưng không bị che khuất và người dùng có thể tương tác với hoạt động đó. Ví dụ: ở chế độ nhiều cửa sổ, một số hoạt động có thể hiển thị và nhận đầu vào cảm ứng cùng lúc.
+- Với sự xuất hiện của tính năng `multi-resume`trong Android Q, nhiều `Activity` có thể ở trạng thái `Resumed`, cho phép chúng hoạt động và tương tác đầy đủ với người dùng.
 
 **onTopResumedActivityChanged**
 
