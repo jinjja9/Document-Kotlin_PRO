@@ -395,6 +395,15 @@ protected void onCreate(Bundle savedInstanceState) {
     boolean value3 = intent.getBooleanExtra("Key_3", false);
 }
 ```
+
+-   `onCreate` là phương thức vòng đời của Activity được gọi khi Activity được khởi tạo.
+-   `super.onCreate(savedInstanceState)` gọi phương thức của lớp cha để thực hiện một số thao tác khởi tạo cần thiết.
+-   `setContentView(R.layout.activity_contact)` đặt giao diện của Activity này bằng cách sử dụng tệp XML activity_contact.
+
+-   `getIntent()` trả về Intent mà Activity này được khởi động. Intent này chứa dữ liệu được truyền từ Activity khác.
+
+
+
 ### 2. Dùng Bundle
 
 Thực ra `Bundle` và `Extra` không khác gì nhau hết. 
