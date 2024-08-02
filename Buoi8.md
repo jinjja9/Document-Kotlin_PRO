@@ -456,6 +456,117 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
+### 3. Ví dụ
+
+**Truyền dữ liệu bằng Extra**
+
+```kotlin
+package com.example.myapplication
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.databinding.ActivityABinding
+
+class ActivityA : AppCompatActivity() {
+    private lateinit var binding: ActivityABinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityABinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.sendButton.setOnClickListener {
+            val intent = Intent(this, ActivityB::class.java).apply {
+                putExtra("KEY_NAME", "John Doe")
+                putExtra("KEY_AGE", 25)
+            }
+            startActivity(intent)
+        }
+    }
+}
+```
+
+```kotlin
+package com.example.myapplication
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.databinding.ActivityBBinding
+
+class ActivityB : AppCompatActivity() {
+    private lateinit var binding: ActivityBBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityBBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val name = intent.getStringExtra("KEY_NAME")
+        val age = intent.getIntExtra("KEY_AGE", -1)
+
+        binding.textView.text = "Name: $name, Age: $age"
+    }
+}
+```
+
+**Truyền dữ liệu bằng Bundle**
+
+```kotlin
+package com.example.myapplication
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.databinding.ActivityABinding
+
+class ActivityA : AppCompatActivity() {
+    private lateinit var binding: ActivityABinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityABinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.sendButton.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("KEY_NAME", "John Doe")
+                putInt("KEY_AGE", 25)
+            }
+
+            val intent = Intent(this, ActivityB::class.java).apply {
+                putExtras(bundle)
+            }
+            startActivity(intent)
+        }
+    }
+}
+```
+
+```kotlin
+package com.example.myapplication
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.databinding.ActivityBBinding
+
+class ActivityB : AppCompatActivity() {
+    private lateinit var binding: ActivityBBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityBBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val bundle = intent.extras
+        val name = bundle?.getString("KEY_NAME")
+        val age = bundle?.getInt("KEY_AGE", -1)
+
+        binding.textView.text = "Name: $name, Age: $age"
+    }
+}
+```
+
 ## VII. Multi-resume, onTopResumedActivityChanged()
 
 
