@@ -373,9 +373,9 @@ class MainActivity : AppCompatActivity() {
 -   `supportFragmentManager.setFragmentResultListener("requestKey", this) { requestKey, bundle -> ... }` thiết lập trình nghe kết quả cho `MainActivity` với `requestKey`.
 
 
-**Chuyển kết quả giữa mảnh mẹ và mảnh con**
+**Passing Results Between Parent and Child Fragments**
 
-***Fragment mẹ (nhận kết quả)***
+*** Parent Fragment (Receiving Results)**
 
 ```kotlin
 import android.os.Bundle
@@ -397,7 +397,7 @@ class ParentFragment : Fragment(R.layout.fragment_parent) {
 
 -   `childFragmentManager.setFragmentResultListener("requestKey") { key, bundle -> ... }` thiết lập trình nghe kết quả cho Fragment mẹ để nhận kết quả từ Fragment con.
 
-***Fragment con (gửi kết quả)***
+***Child Fragment (Sending Results)***
 
 ```kotlin
 import android.os.Bundle
