@@ -1,4 +1,4 @@
-#  [ANDROID] BUỔI 6: Activity
+#  [ANDROID] BUỔI 8: Activit,Context,Intent
 
 ***
 
@@ -97,7 +97,7 @@ Android cung cấp một số các phương thức để điều khiển quy tr�
 
 -   `onDestroy()`: gọi khi Activity bị hủy hoàn toàn (ví dụ gọi finish(), hoặc người dùng kill Activity)
 
-![alt text](image.png)
+![alt text](image/image21.png)
 
 - Activity phải nạp chồng phương thức `onCreate()`, và để chèn giao diện vào Activity thì trong **`onCreate()`** gọi phương thức `setContentView(R.layout.tên_layout);`
 - Khi xoay màn hình thì phải gọi đến method onDestroy() rồi lại quay trở về onCreate()
@@ -646,3 +646,6 @@ class MainActivity : AppCompatActivity() {
 -   **Multi-resume:** Hữu ích cho các ứng dụng cần cập nhật thông tin hoặc giao diện người dùng liên tục, ngay cả khi chúng không ở trạng thái foreground.
 
 -   **onTopResumedActivityChanged:** Bạn có thể sử dụng phương thức này để thực hiện các hành động khi activity trở thành hoạt động chính (ví dụ: cập nhật dữ liệu, bắt đầu lại phát video, v.v.) và dừng các hành động này khi activity không còn là hoạt động chính.
+
+
+AnDroid 27-31
