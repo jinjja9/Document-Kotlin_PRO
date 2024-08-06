@@ -59,6 +59,24 @@ Ta có thể thấy mỗi mảnh liên kết với 1 `FragmentManager` có ch�
 
 *Mỗi host có FragmentManager riêng liên kết với nó để quản lý các fragment con.*
 
+
+**Host Activity:** 
+    
+-   `FragmentActivity`: Đây là một hoạt động chứa (host activity) có thể chứa các `Fragment`. Nó sử dụng `supportFragmentManager` để quản lý các `Fragment` của nó.
+
+**Host Fragment:**
+
+-   `Fragment`: Đây là một phân mảnh chứa (host fragment) có thể chứa các phân mảnh con (child fragments). Nó sử dụng `parentFragmentManager` để quản lý các phân mảnh của nó.
+
+**Child Fragment(s):**
+
+-   Các phân mảnh con (child fragments): Các phân mảnh này được chứa bên trong một phân mảnh khác (host fragment). Chúng được quản lý bởi `childFragmentManager` của phân mảnh chứa (host fragment).
+
+
+**supportFragmentManager**: Quản lý các phân mảnh trực tiếp trong `FragmentActivity`.
+**parentFragmentManager**: Quản lý các phân mảnh con của một phân mảnh chứa.
+**childFragmentManager**: Quản lý các phân mảnh con bên trong một phân mảnh chứa.
+
 ### 2. Sử dụng FragmentManager
 
 - `FragmentManager` quản lý backstack của mảnh. Trong thời gian chạy, `FragmentManager` có thể thực hiện các thao tác ngăn xếp lui như thêm hoặc xoá các mảnh để phản hồi tương tác của người dùng. Mỗi tập hợp thay đổi được xác nhận cùng nhau dưới dạng một đơn vị duy nhất gọi là `FragmentTransaction`.
@@ -98,6 +116,27 @@ supportFragmentManager.commit {
 - Sử dụng `remove()` để xóa một fragment.
 - Sử dụng `replace()` để thay thế một fragment hiện có bằng một fragment mới.
 
+```kotlin
+// Add Fragment
+val fm = supportFragmentManager
+val ft_add = fm.beginTransaction()
+ft_add.add(R.id.your_placeholder, YourFragment())
+ft_add.commit()
+
+// Replace Fragment
+val ft_rep = fm.beginTransaction()
+ft_rep.replace(R.id.your_placeholder, YourFragment())
+ft_rep.commit()
+
+// Remove Fragment
+val fragment = fm.findFragmentById(R.id.your_placeholder)
+fragment?.let {
+    val ft_remo = fm.beginTransaction()
+    ft_remo.remove(it)
+    ft_remo.commit()
+}
+```
+
 #### Add to Back Stack
 - Để lưu transaction vào back stack, sử dụng `addToBackStack()`.
 
@@ -108,15 +147,10 @@ supportFragmentManager.commit {
 #### Operation Ordering
 - Thứ tự các thao tác trong một `FragmentTransaction` rất quan trọng, đặc biệt khi sử dụng `setCustomAnimations()`.
 
-#### Limiting Fragment Lifecycle
-- `setMaxLifecycle()` để giới hạn trạng thái tối đa của một fragment trong transaction.
-
 #### Showing and Hiding Fragments
 - Sử dụng `show()` và `hide()` để thay đổi trạng thái hiển thị của fragment mà không ảnh hưởng đến lifecycle của fragment.
 
-#### Attaching and Detaching Fragments
-- `detach()` tách fragment khỏi UI, phá hủy view hierarchy nhưng fragment vẫn được quản lý bởi `FragmentManager`.
-- `attach()` gắn lại một fragment đã bị tách, tái tạo view hierarchy và hiển thị trên UI.
+
 ## IV. Fragment Lifecycle
 
 Mỗi phiên bản `Fragment` đều có vòng đời riêng. Khi một người dùng điều hướng và tương tác với ứng dụng, các phân mảnh sẽ dịch chuyển qua các trạng thái khác nhau của vòng đời khi chúng được thêm, xoá, xuất hiện hoặc thoát khỏi màn hình.
