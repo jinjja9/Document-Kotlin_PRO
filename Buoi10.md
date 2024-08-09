@@ -389,3 +389,181 @@ override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 -   Khi bạn muốn cập nhật danh sách dữ liệu mà không cần phải viết nhiều mã để tính toán sự thay đổi.
 
 -   Khi danh sách của bạn có thể thay đổi thường xuyên và bạn muốn tối ưu hóa hiệu suất của RecyclerView.
+
+## VII. RecyclerView Multiple View Type
+
+`RecyclerView` với `Multiple View Type` là một kỹ thuật cho phép bạn hiển thị nhiều loại dữ liệu khác nhau trong cùng một danh sách, mỗi loại dữ liệu có bố cục riêng. Ví dụ, bạn có thể có một danh sách hiển thị các loại mục khác nhau như `tiêu đề`, `hình ảnh`, và `văn bản` với các bố cục riêng biệt.
+
+***Dưới đây là các bước cơ bản để triển khai RecyclerView với Multiple View Type:***
+
+### 1. Định nghĩa các lớp dữ liệu (Data Model Classes)
+
+Đầu tiên, bạn cần tạo các lớp dữ liệu cho từng loại view mà bạn muốn hiển thị. Mỗi lớp dữ liệu nên kế thừa từ một lớp cơ sở chung, dùng để xác định loại view.
+
+```kotlin
+sealed class ListItem {
+    data class HeaderItem(val text: String) : ListItem()
+    data class TextItem(val text: String) : ListItem()
+    data class ImageItem(val imageUrl: String) : ListItem()
+}
+```
+
+### 2. Tạo các ViewHolder cho từng loại view
+
+Tiếp theo, tạo các lớp ViewHolder riêng biệt cho từng loại view mà bạn muốn hiển thị trong RecyclerView. Mỗi ViewHolder chịu trách nhiệm giữ các tham chiếu đến các view cụ thể trong một item của danh sách.
+
+```kotlin
+// ViewHolder cho từng loại view
+class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bind(item: ListItem.HeaderItem) {
+        val textView = itemView.findViewById<TextView>(R.id.text_view)
+        textView.text = item.text
+    }
+}
+
+class TextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bind(item: ListItem.TextItem) {
+        val textView = itemView.findViewById<TextView>(R.id.text_view)
+        textView.text = item.text
+    }
+}
+
+class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bind(item: ListItem.ImageItem) {
+        val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        GlideApp.with(imageView)
+            .load(item.imageUrl)
+            .into(imageView)
+    }
+}
+```
+
+### 3. Tạo adapter cho RecyclerView
+
+Tạo một lớp adapter mở rộng từ `RecyclerView.Adapter` và override các phương thức như `onCreateViewHolder`, `onBindViewHolder`, `getItemCount`, và `getItemViewType`.
+
+```kotlin
+class MyAdapter(
+    private val items: List<ListItem>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    override fun getItemViewType(position: Int): Int {
+        return when (items[position]) {
+            is ListItem.HeaderItem -> 0
+            is ListItem.TextItem -> 1
+            is ListItem.ImageItem -> 2
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            0 -> HeaderViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.header_item_layout, parent, false)
+            )
+            1 -> TextViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.text_item_layout, parent, false)
+            )
+            2 -> ImageViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.image_item_layout, parent, false)
+            )
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = items[position]) {
+            is ListItem.HeaderItem -> (holder as HeaderViewHolder).bind(item)
+            is ListItem.TextItem -> (holder as TextViewHolder).bind(item)
+            is ListItem.ImageItem -> (holder as ImageViewHolder).bind(item)
+        }
+    }
+
+    override fun getItemCount() = items.size
+}
+```
+
+### 4. Tạo các file layout tùy chỉnh
+
+Tạo các file layout XML cho từng loại view mà bạn muốn hiển thị trong RecyclerView.
+
+**header_item_layout.xml**
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>
+```
+
+**text_item_layout.xml**
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" />
+</LinearLayout>
+```
+
+**image_item_layout.xml**
+
+```
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+</LinearLayout>
+```
+
+## 5. Thiết lập adapter cho RecyclerView
+
+Cuối cùng, tạo một instance của adapter trong Activity hoặc Fragment và gán nó cho RecyclerView.
+
+```kotlin
+fun setupRecyclerView() {
+    val recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
+    val list = listOf(
+        ListItem.HeaderItem("Header 1"),
+        ListItem.TextItem("Text Item 1"),
+        ListItem.ImageItem("https://loremflickr.com/320/240"),
+        ListItem.HeaderItem("Header 2"),
+        ListItem.TextItem("Text Item 2"),
+        ListItem.ImageItem("https://loremflickr.com/320/240")
+    )
+    
+    val adapter = MyAdapter(list)
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    recyclerView.adapter = adapter
+}
+```
+
+
+
+
+
