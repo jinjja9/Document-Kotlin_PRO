@@ -167,7 +167,7 @@ Navigation (điều hướng) là hành động cho phép người dùng điều
         - Trong Navigation Editor (Trình chỉnh sửa điều hướng), hãy nhấp vào biểu tượng **Đích đến mới** , sau đó nhấp vào **Create new destination** (Tạo đích đến mới).
         - Tạo fragment trong hộp thoại **New Android Component.**
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/047a6abc-aa57-475b-9407-39df1615c425/Untitled.png)
+    
         
 - **Các thuộc tính của 1 Destionation**
     - Nhấp để chọn một destination, và hãy lưu ý các thuộc tính sau trong bảng **Attributes** (Thuộc tính):
@@ -197,16 +197,6 @@ Navigation (điều hướng) là hành động cho phép người dùng điều
     1. Trong thẻ **Design** (Thiết kế), hãy nhấp để `highlight a destination`.
     2. Nhấp vào nút **Assign start destination** (Chỉ định đích đến bắt đầu) (icon home). Hoặc có thể nhấp chuột phải vào đích đến và nhấp vào **Set as Start Destination** (Đặt làm đích đến bắt đầu).
     
-- **Sử dụng NavController**
-    - Công dụng của ***NavController*** là di chuyển từ một ***destination*** này đến một ***destination*** khác (là một Activity hay một Fragment khác).
-    - Gọi ra một `NavController`
-    - ***NavController*** có sẵn bên trong ***NavHostFragment***. Các câu lệnh gọi ra như sau.
-        - `Fragment.findNavController()`
-        - `View.findNavController()`
-        - `Activity.findNavController(viewId: **Int**)`
-    - Tạo một NavController (Cách khởi tạo trong Activity)
-        
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/db89fca0-cb9f-4a6b-8db1-f02b5d06c83c/Untitled.png)
         
 - **Dùng NavController Để Di Chuyển Đến Destination**
     - Có nhiều cách để di chuyển từ một ***destination*** này đến ***destination*** khác bên trong ***NavHost*** sử dụng ***NavController***.
@@ -240,19 +230,9 @@ Navigation (điều hướng) là hành động cho phép người dùng điều
             findNavController().navigate(R.id.profileFragment)
         }
         ```
-        
+        ![alt text](image.png)
     - ***Cách 2 – Di Chuyển Bằng Action***
-        - Để tạo một ***action***, trước hết mở lại ***login_nav_graph*** lên, đảm bảo đang xem ở tab ***Design***. Click chọn vào ***HomeFragment***, sẽ thấy một khung xanh bao quanh ***destination*** này kèm với một hình tròn ở bên phải khung xanh này.
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0ac86e5-11b5-4798-9747-032999218d63/Untitled.png)
-        
-        - Nhấn giữ chuột và kéo từ chấm tròn trên ***homeFragment*** này vào ***profileFragment***. Khi thả chuột ra bạn sẽ tạo được một ***action*** hình mũi tên như thế này.
-        
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d2595a37-fc77-4e35-9ca7-eeda220e045e/Untitled.png)
-        
-        - Nhấn vào mũi tên để chọn `Action`. Nhìn vào khung ***Attributes*** sẽ thấy một số thuộc tính quan trọng của nó.
-            - ***id***: chính là ***id*** của ***action***.
-            - ***destination***: chính là ***id*** của ***destination*** mà ***action*** này sẽ dẫn đến.
         - XML code
             
             ```kotlin
@@ -295,6 +275,7 @@ Navigation (điều hướng) là hành động cho phép người dùng điều
 -   4. Active icon
 -   5. Active text label
 
+
 ## IV. TabLayout 
 
 >*Tài liệu tham khảo*:  [TabLayout](https://viblo.asia/p/tao-material-design-tab-trong-ung-dung-android-XL6lAP6NZek
@@ -319,9 +300,32 @@ Navigation (điều hướng) là hành động cho phép người dùng điều
 
 ### 2. sử dụng TabLayout 
 
-- video
+**Thêm TabLayout và ViewPager**
+
+-   Import thự viện support trong build.gradle :
+
+```
+dependencies {
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+}
+```
+**Tạo PagerAdapter**: Chúng ta cần phải tạo ra một lớp SampleAdapter.kt kế thừa từ FragmentPagerAdapter. Lớp này có trách nhiệm quản lý các Fragment khác nhau sẽ được hiển thị trên các tab.
+
+**Khởi tạo các thành phần**: Tiếp theo, chúng ta sẽ khởi tạo các thành phần TabLayout, ViewPager và SampleAdapter. Việc này được thực hiện bên trong onCreate () trong MainActivity.kt.
 
 ##  V. ViewPager2
 
 >*Tài liệu tham khảo*:  [ViewPager2](https://viblo.asia/p/su-dung-viewpager2-trong-android-oOVlYkVVK8W
 )
+
+>**ViewPager2** là một phiên bản cải tiến của ViewPager trong Android, được giới thiệu để cung cấp trải nghiệm cuộn nội dung mượt mà hơn và tích hợp nhiều tính năng mới.
+
+- **Cuộn nội dung mượt hơn:** `ViewPager2` được tối ưu hóa để cung cấp hiệu suất tốt hơn khi cuộn qua các trang nội dung. Nó sử dụng `RecyclerView` dưới phía dưới, giúp tận dụng các cải tiến và tối ưu hóa của RecyclerView.
+- **Hỗ trợ RTL (Right-to-Left):** `ViewPager2` hỗ trợ chế độ `Right-to-Left` (quyền sang trái) một cách tự nhiên, giúp đáp ứng tốt hơn với các ngôn ngữ và văn hóa sử dụng bố cục từ phải sang trái.
+- **Tích hợp với Data Binding:** `ViewPager2` có tích hợp tốt với `Data Binding`, giúp việc ánh xạ dữ liệu và tương tác với nội dung trở nên dễ dàng hơn.
+- **Hỗ trợ Adapter mới:** `ViewPager2` sử dụng `Adapter` mới với tên là **`RecyclerView.Adapter`**, thay vì **`PagerAdapter`** trong phiên bản trước. Điều này giúp tạo ra một trải nghiệm tương tự việc làm việc với RecyclerView.
+- **Hỗ trợ các kiểu layout khác nhau:** `ViewPager2` cho phép bạn dễ dàng chọn kiểu layout ngang (`horizontal`), dọc (`vertical`) hoặc ngang theo chiều từ phải sang trái (`RTL`).
+- **Callback cho sự kiện cuộn:** `ViewPager2` cung cấp các `callback` cho các sự kiện liên quan đến cuộn như khi trang được chọn, khi trang bị chọn lại và khi có thay đổi trong cuộn.
+
+![alt text](image/image50.png)
