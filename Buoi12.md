@@ -2,7 +2,8 @@
 
 ***
 
->*Tài liệu tham khảo*:  []()
+>*Tài liệu tham khảo*:  [HuyInit](https://github.com/huyinit/hoc-co-so-du-lieu-sql-sieu-nhanh-co-code-san-/tree/main)
+
 
 ## I. CSDL
 
@@ -782,85 +783,105 @@ FROM orders
 GROUP BY customer_id;
 ```
 
-### 2. Các loại JOIN trong SQL
+### 2. HAVING:
 
-**INNER JOIN:**
-
-**Mục đích:** Kết hợp các hàng từ hai bảng dựa trên điều kiện nhất định, chỉ trả về các hàng mà có dữ liệu phù hợp ở cả hai bảng.
+**Chức năng:** `HAVING` được sử dụng để lọc các nhóm sau khi chúng đã được tạo ra bởi GROUP BY. Điều này giống với `WHERE`, nhưng `WHERE` lọc các hàng trước khi nhóm, còn `HAVING` lọc các nhóm sau khi đã áp dụng các phép tính tổng hợp.
 
 **Cú pháp:**
 
 ```sql
-SELECT columns
-FROM table1
-INNER JOIN table2 ON table1.common_column = table2.common_column;
+SELECT column1, AGGREGATE_FUNCTION(column2)
+FROM table_name
+GROUP BY column1
+HAVING AGGREGATE_FUNCTION(column2) condition;
 ```
 
-*Ví dụ: Lấy thông tin đơn hàng và tên khách hàng cho các đơn hàng có khách hàng tương ứng.*
+*Ví dụ:*
+
+Tiếp tục từ ví dụ trên, bạn muốn lọc ra những nhân viên chỉ có tổng doanh số lớn hơn 1000 trong mỗi khu vực:
 
 ```sql
-SELECT orders.order_id, customers.customer_name
-FROM orders
-INNER JOIN customers ON orders.customer_id = customers.customer_id;
+SELECT salesperson, region, SUM(amount) AS total_sales
+FROM sales
+GROUP BY salesperson, region
+HAVING SUM(amount) > 1000;
 ```
 
-**LEFT JOIN (or LEFT OUTER JOIN):**
+**Sự khác biệt giữa HAVING và WHERE:**
 
-**Mục đích:** Trả về tất cả các hàng từ bảng bên trái và các hàng tương ứng từ bảng bên phải. Nếu không có hàng tương ứng trong bảng bên phải, thì kết quả sẽ chứa `NULL`.
+`WHERE:` Được sử dụng để lọc các hàng trước khi nhóm lại. Bạn không thể sử dụng các hàm tổng hợp trong WHERE.
 
-**Cú pháp:**
+`HAVING:` Được sử dụng để lọc các nhóm sau khi đã nhóm lại và có thể sử dụng các hàm tổng hợp để lọc.
+
+
+### 3. Các loại JOIN trong SQL
+
+![alt text](image/image75.png)
+![alt text](image/image76.png)
+![alt text](image/image77.png)
+
+## VIII. Ví dụ
+
+-   Tạo bảng
+```sql
+CREATE TABLE `student`.`student` (
+  `ID` INT NOT NULL,
+  `Name` VARCHAR(45) NULL,
+  `Age` VARCHAR(45) NULL,
+  `City` VARCHAR(45) NULL,
+  PRIMARY KEY (`ID`));
+```
+
+- chèn dữ liệu
+```sql
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('1', 'Nguyen', '45', 'Hanoi');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('2', 'Hoang', '26', 'Hue');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('3', 'Trung', '13', 'Laocai');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('4', 'Quan', '15', 'Danang');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('5', 'Hieu', '10', 'HCM');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('6', 'Ngoc', '5', 'Nghean');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('7', 'Linh', '45', 'Hanoi');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('8', 'Hoang', '6', 'Hanoi');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('9', 'Hieu', '9', 'Hue');
+INSERT INTO `student`.`student` (`ID`, `Name`, `Age`, `City`) VALUES ('10', 'Trung', '21', 'Nghean');
+```
+
+- chọn 1 cột
 
 ```sql
-SELECT columns
-FROM table1
-LEFT JOIN table2 ON table1.common_column = table2.common_column;
+SELECT Name FROM student.student;
 ```
 
-*Ví dụ: Lấy tất cả thông tin đơn hàng cùng với tên khách hàng, kể cả khi đơn hàng không có khách hàng tương ứng.*
+- lọc cột không trùng
 
 ```sql
-SELECT orders.order_id, customers.customer_name
-FROM orders
-LEFT JOIN customers ON orders.customer_id = customers.customer_id;
+SELECT distinct Name FROM student.student;
 ```
 
-**RIGHT JOIN (or RIGHT OUTER JOIN):**
-
-**Mục đích:** Tương tự như LEFT JOIN, nhưng trả về tất cả các hàng từ bảng bên phải và các hàng tương ứng từ bảng bên trái.
-
-**Cú pháp:**
+- Lọc theo tên
 
 ```sql
-SELECT columns
-FROM table1
-RIGHT JOIN table2 ON table1.common_column = table2.common_column;
+SELECT * FROM student.student
+where Name = 'Hieu';
 ```
 
-*Ví dụ: Lấy tất cả thông tin khách hàng cùng với các đơn hàng tương ứng, kể cả khi khách hàng không có đơn hàng nào.*
+- Lọc >18 tuổi
 
 ```sql
-SELECT customers.customer_name, orders.order_id
-FROM customers
-RIGHT JOIN orders ON customers.customer_id = orders.customer_id;
+SELECT * FROM student.student
+where Age > 18;
 ```
 
-**FULL JOIN (or FULL OUTER JOIN):**
-
-**Mục đích:** Trả về tất cả các hàng khi có sự khớp giữa bảng bên trái và bên phải. Nếu không có sự khớp, kết quả sẽ chứa NULL ở phía bảng không có hàng tương ứng.
-
-**Cú pháp:**
+- Sắp xếp tên theo thứ tự từ điểm giảm dần
 
 ```sql
-SELECT columns
-FROM table1
-FULL OUTER JOIN table2 ON table1.common_column = table2.common_column;
+SELECT * FROM student.student
+order by name desc
 ```
 
-*Ví dụ: Lấy tất cả thông tin đơn hàng và tên khách hàng, kể cả khi đơn hàng hoặc khách hàng không có đối tác tương ứng.*
+- Sắp xếp tuổi tăng, tên giảm
 
 ```sql
-SELECT orders.order_id, customers.customer_name
-FROM orders
-FULL OUTER JOIN customers ON orders.customer_id = customers.customer_id;
+SELECT * FROM student.student
+order by age asc, name desc 
 ```
-
