@@ -319,7 +319,9 @@ dependencies {
 >*Tài liệu tham khảo*:  [ViewPager2](https://viblo.asia/p/su-dung-viewpager2-trong-android-oOVlYkVVK8W
 )
 
->**ViewPager2** là một phiên bản cải tiến của ViewPager trong Android, được giới thiệu để cung cấp trải nghiệm cuộn nội dung mượt mà hơn và tích hợp nhiều tính năng mới.
+> **ViewPager2** được sử dụng để tạo giao diện trượt qua các nội dung khác nhau, chẳng hạn như các màn hình **Fragment** hoặc **Views**. Nó là phiên bản cải tiến và thay thế cho **ViewPager** trong **Android Support Library**, mang lại nhiều cải tiến và tính năng mới.
+
+![alt text](image/image51.png)
 
 - **Cuộn nội dung mượt hơn:** `ViewPager2` được tối ưu hóa để cung cấp hiệu suất tốt hơn khi cuộn qua các trang nội dung. Nó sử dụng `RecyclerView` dưới phía dưới, giúp tận dụng các cải tiến và tối ưu hóa của RecyclerView.
 - **Hỗ trợ RTL (Right-to-Left):** `ViewPager2` hỗ trợ chế độ `Right-to-Left` (quyền sang trái) một cách tự nhiên, giúp đáp ứng tốt hơn với các ngôn ngữ và văn hóa sử dụng bố cục từ phải sang trái.
