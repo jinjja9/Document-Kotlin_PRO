@@ -817,6 +817,7 @@ HAVING SUM(amount) > 1000;
 ### 3. Các loại JOIN trong SQL
 
 ![alt text](image/image75.png)
+![alt text](image/image78.png)
 ![alt text](image/image76.png)
 ![alt text](image/image77.png)
 
